@@ -1,8 +1,73 @@
 body {
     margin: 0;
+    background-color: #212121;
+    color: white;
 }
 
 .container {
     display: flex;
+    justify-items: center;
     justify-content: space-around;
+    margin: 0% 15% 0% 15%;
 }
+h3{
+    margin-left: 35%;
+}
+h1{
+    text-align: center;
+    padding-top: 25%;
+}
+
+#buttonHome{
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
+    padding: 20%;
+    margin-top: auto;
+}
+
+/* From uiverse.io by @Yaseen549 */
+.scoreCard {
+    width: 300px;
+    height: 300px;
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
+}
+  /* From uiverse.io */
+button {
+    margin: 0 5px;
+    padding: 1em 1em;
+    font-size: 12px;
+    width: 13em;
+    height: 4em;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 600;
+    color: #000;
+    background-color: #fff;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  button:hover {
+    background-color: #23c483;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
+  }
+  
+  button:active {
+    transform: translateY(-1px);
+  }
+#resetBtn{
+    display: flex;
+    align-self: center;
+}
+  
+  
