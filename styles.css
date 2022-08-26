@@ -11,14 +11,14 @@ body {
     margin: 0% 15% 0% 15%;
 }
 h3{
-    margin-left: 35%;
+    margin-left: 40%;
 }
 h1{
     text-align: center;
     padding-top: 25%;
 }
 
-#buttonHome{
+section{
     display: flex;
     align-items: center;
     align-self: flex-end;
@@ -34,6 +34,14 @@ h1{
     background: #212121;
     box-shadow: 15px 15px 30px rgb(25, 25, 25),
                 -15px -15px 30px rgb(60, 60, 60);
+}
+#leading{
+  box-shadow: 15px 15px 30px rgb(226,40,34),
+                -15px -15px 30px rgb(226,88,34);
+}
+#tie{
+  box-shadow: 15px 15px 30px rgb(0,94,184),
+                -15px -15px 30px rgb(0,94,184);
 }
   /* From uiverse.io */
 button {
