@@ -1,36 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <html>
-        <head>
-            <link rel="stylesheet" href="styles.css">
-        </head>
-        <body>
-            <div class="container">
-                <div>
-                    <h3>HOME</h3>
-                    <div class="scoreCard">
-                        <h1>0</h1>
-                        <section id="btnHome">
-                            <button onclick="plusOne()"> +1 </button>
-                            <button onclick="plusThree()"> +3 </button>
-                            <button onclick="plusFive()"> +5 </button>
-                        </section>
-                    </div>
-                </div>
-                <button id="resetBtn" onclick="resetBtn()"> Start new Game </button>
-                <div>
-                    <h3>GUEST</h3>
-                    <div class="scoreCard">
-                        <h1>0</h1>
-                        <section id="btnGuest">
-                            <button onclick="plusOne()"> +1 </button>
-                            <button onclick="plusThree()"> +3 </button>
-                            <button onclick="plusFive()"> +5 </button>
-                        </section>
-                    </div>
-                </div>
-            </div>
-            <script src="script.js"></script>
-        </body>
-    </html>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Basketball Scoreboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="page-header">
+      <div class="header-badge">Live</div>
+      <div class="header-text">
+        <p class="eyebrow">Courtside Control</p>
+        <h1>Basketball Scoreboard</h1>
+        <p class="subtitle">Track every run with a clean, punchy scoreboard.</p>
+      </div>
+    </header>
+
+    <main class="board" aria-label="Scoreboard">
+      <section class="team-card" data-team="home">
+        <div class="team-top">
+          <input class="team-name" type="text" value="Home" maxlength="12" aria-label="Home team name" spellcheck="false">
+          <span class="team-tag">Home Court</span>
+        </div>
+        <output class="score" aria-live="polite" aria-atomic="true">0</output>
+        <div class="score-actions" role="group" aria-label="Home scoring controls">
+          <button class="score-btn" data-points="1">+1</button>
+          <button class="score-btn" data-points="3">+3</button>
+          <button class="score-btn" data-points="5">+5</button>
+        </div>
+      </section>
+
+      <section class="team-card" data-team="guest">
+        <div class="team-top">
+          <input class="team-name" type="text" value="Guest" maxlength="12" aria-label="Guest team name" spellcheck="false">
+          <span class="team-tag">Away</span>
+        </div>
+        <output class="score" aria-live="polite" aria-atomic="true">0</output>
+        <div class="score-actions" role="group" aria-label="Guest scoring controls">
+          <button class="score-btn" data-points="1">+1</button>
+          <button class="score-btn" data-points="3">+3</button>
+          <button class="score-btn" data-points="5">+5</button>
+        </div>
+      </section>
+    </main>
+
+    <aside class="controls">
+      <div class="status" id="statusMessage" aria-live="polite">Tip-off ready.</div>
+      <div class="control-buttons">
+        <button id="resetBtn" class="primary">Start new game</button>
+      </div>
+    </aside>
+
+    <footer class="page-footer">
+      <span>Scoreboard v2</span>
+    </footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

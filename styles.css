@@ -1,81 +1,322 @@
+:root {
+  color-scheme: light;
+  --bg-start: #e7f6ff;
+  --bg-end: #f5e4cd;
+  --ink: #101317;
+  --panel: #101319;
+  --home: #ff8c42;
+  --guest: #49b6ff;
+  --tie: #f2c94c;
+  --cream: #fff1d6;
+  --shadow: rgba(16, 19, 23, 0.25);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
-    margin: 0;
-    background-color: #212121;
-    color: white;
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--ink);
+  background: radial-gradient(1200px 600px at 15% 10%, var(--bg-start) 0%, #f7f0e2 55%, var(--bg-end) 100%);
+  background-attachment: fixed;
 }
 
-.container {
-    display: flex;
-    justify-items: center;
-    justify-content: space-around;
-    margin: 0% 15% 0% 15%;
-}
-h3{
-    margin-left: 40%;
-}
-h1{
-    text-align: center;
-    padding-top: 25%;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(16, 19, 23, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.35;
+  pointer-events: none;
 }
 
-section{
-    display: flex;
-    align-items: center;
-    align-self: flex-end;
-    padding: 20%;
-    margin-top: auto;
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px 64px;
 }
 
-/* From uiverse.io by @Yaseen549 */
-.scoreCard {
-    width: 300px;
-    height: 300px;
-    border-radius: 30px;
-    background: #212121;
-    box-shadow: 15px 15px 30px rgb(25, 25, 25),
-                -15px -15px 30px rgb(60, 60, 60);
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  animation: rise 0.6s ease both;
 }
-#leading{
-  box-shadow: 15px 15px 30px rgb(226,40,34),
-                -15px -15px 30px rgb(226,88,34);
+
+.header-badge {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: linear-gradient(120deg, #ffbe5d, #ff7a18);
+  color: #1a1209;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.7rem;
 }
-#tie{
-  box-shadow: 15px 15px 30px rgb(0,94,184),
-                -15px -15px 30px rgb(0,94,184);
+
+.header-text {
+  max-width: 520px;
 }
-  /* From uiverse.io */
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.7rem;
+  color: rgba(16, 19, 23, 0.6);
+}
+
+h1 {
+  margin: 10px 0 6px;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-family: "Chakra Petch", sans-serif;
+  letter-spacing: 0.06em;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 1rem;
+  color: rgba(16, 19, 23, 0.7);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.team-card {
+  position: relative;
+  padding: 24px;
+  border-radius: 26px;
+  background: var(--panel);
+  color: #f8f4ea;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 40px var(--shadow);
+  overflow: hidden;
+  animation: rise 0.7s ease both;
+}
+
+.team-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.08), transparent 60%);
+  opacity: 0.6;
+}
+
+.team-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, transparent, var(--team-accent), transparent);
+}
+
+.team-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.team-card[data-team="home"] {
+  --team-accent: var(--home);
+  animation-delay: 0.08s;
+}
+
+.team-card[data-team="guest"] {
+  --team-accent: var(--guest);
+  animation-delay: 0.18s;
+}
+
+.team-card.leading {
+  box-shadow: 0 28px 50px rgba(16, 19, 23, 0.45), 0 0 0 2px var(--team-accent);
+  transform: translateY(-4px);
+}
+
+.team-card.tied {
+  box-shadow: 0 24px 40px var(--shadow), 0 0 0 2px var(--tie);
+}
+
+.team-card.tied::after {
+  background: linear-gradient(90deg, transparent, var(--tie), transparent);
+}
+
+.team-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.team-name {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #f8f4ea;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(248, 244, 234, 0.3);
+  padding: 4px 0;
+  max-width: 180px;
+}
+
+.team-name:focus-visible {
+  outline: 2px solid var(--team-accent);
+  outline-offset: 4px;
+}
+
+.team-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(248, 244, 234, 0.8);
+  white-space: nowrap;
+}
+
+.score {
+  margin: 24px 0 20px;
+  font-family: "Chakra Petch", sans-serif;
+  font-size: clamp(3.8rem, 8vw, 6rem);
+  text-align: center;
+  letter-spacing: 0.12em;
+  color: #fff1d6;
+  text-shadow: 0 0 20px rgba(255, 201, 120, 0.35);
+}
+
+.score-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
 button {
-    margin: 0 5px;
-    padding: 1em 1em;
-    font-size: 12px;
-    width: 13em;
-    height: 4em;
-    text-transform: uppercase;
-    letter-spacing: 2.5px;
-    font-weight: 600;
-    color: #000;
-    background-color: #fff;
-    border: none;
-    border-radius: 45px;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease 0s;
-    cursor: pointer;
-    outline: none;
-  }
-  
-  button:hover {
-    background-color: #23c483;
-    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
-    color: #fff;
-    transform: translateY(-7px);
-  }
-  
-  button:active {
-    transform: translateY(-1px);
-  }
-#resetBtn{
-    display: flex;
-    align-self: center;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 999px;
+  padding: 0.65rem 0.9rem;
+  background: var(--cream);
+  color: var(--ink);
+  box-shadow: 0 12px 24px rgba(16, 19, 23, 0.18);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-  
-  
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 30px rgba(16, 19, 23, 0.22);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.score-btn {
+  background: #fff4de;
+}
+
+.controls {
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(16, 19, 23, 0.08);
+  animation: rise 0.7s ease both;
+  animation-delay: 0.24s;
+}
+
+.status {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.control-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.primary {
+  background: var(--ink);
+  color: #fff2d8;
+}
+
+.page-footer {
+  margin-top: 32px;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 0.65rem;
+  color: rgba(16, 19, 23, 0.45);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .board {
+    grid-template-columns: 1fr;
+  }
+
+  .team-name {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 36px 18px 56px;
+  }
+
+  .page-header {
+    align-items: flex-start;
+  }
+
+  .controls {
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

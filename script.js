@@ -1,70 +1,121 @@
-let homeScore = 0;
-let guestScore = 0;
-let homeScoreTxt = document.getElementsByClassName("scoreCard")[0].children[0];
-let guestScoreTxt = document.getElementsByClassName("scoreCard")[1].children[0];
-let newGameBtn = document.getElementById("resetBtn");
+const state = {
+  home: 0,
+  guest: 0,
+};
 
-function resetBtn(){
-    if(homeScore == guestScore){
-        alert("Both Teams are Tied!")
-    } else if (homeScore > guestScore){
-        alert("Home Wins!")
-    } else {
-        alert("Guest Wins!")
-    }
-    homeScore = 0;
-    guestScore = 0;
-    homeScoreTxt.textContent = 0;
-    guestScoreTxt.textContent = 0;
-    document.getElementsByClassName("scoreCard")[1].removeAttribute('id','leading');
-    document.getElementsByClassName("scoreCard")[0].removeAttribute('id','leading');
+let hasScored = false;
+
+const homeCard = document.querySelector('.team-card[data-team="home"]');
+const guestCard = document.querySelector('.team-card[data-team="guest"]');
+const statusEl = document.getElementById('statusMessage');
+const resetBtn = document.getElementById('resetBtn');
+
+const cards = {
+  home: homeCard,
+  guest: guestCard,
+};
+
+const scores = {
+  home: homeCard.querySelector('.score'),
+  guest: guestCard.querySelector('.score'),
+};
+
+const names = {
+  home: homeCard.querySelector('.team-name'),
+  guest: guestCard.querySelector('.team-name'),
+};
+
+function getTeamName(team) {
+  const value = names[team].value.trim();
+  if (value) {
+    return value;
+  }
+  return team === 'home' ? 'Home' : 'Guest';
 }
 
-function isLeading(){
-    if(homeScore == guestScore){
-        console.log("TIE!")
-        document.getElementsByClassName("scoreCard")[0].setAttribute('id', 'tie');
-        document.getElementsByClassName("scoreCard")[1].setAttribute('id','tie');
-    } else if (homeScore > guestScore){
-        console.log("HOME IS LEADING")
-        document.getElementsByClassName("scoreCard")[0].setAttribute('id', 'leading');
-        document.getElementsByClassName("scoreCard")[1].removeAttribute('id','leading');
-    } else {
-        console.log("GUEST IS LEADING")
-        document.getElementsByClassName("scoreCard")[1].setAttribute('id', 'leading');
-        document.getElementsByClassName("scoreCard")[0].removeAttribute('id','leading');
-    }
+function updateScores() {
+  scores.home.textContent = state.home;
+  scores.guest.textContent = state.guest;
+
+  const isTie = hasScored && state.home === state.guest;
+  cards.home.classList.toggle('tied', isTie);
+  cards.guest.classList.toggle('tied', isTie);
+  cards.home.classList.toggle('leading', !isTie && state.home > state.guest);
+  cards.guest.classList.toggle('leading', !isTie && state.guest > state.home);
 }
 
-function plusOne(){
-    if (event.target.parentElement.id == "btnHome"){
-        homeScore += 1;
-        homeScoreTxt.textContent = homeScore;
-    } else {
-        guestScore += 1;
-        guestScoreTxt.textContent = guestScore;
-    }
-    isLeading();
+function updateStatus() {
+  if (!hasScored) {
+    statusEl.textContent = 'Tip-off ready.';
+    return;
+  }
+
+  if (state.home === state.guest) {
+    statusEl.textContent = `Tie game at ${state.home}.`;
+    return;
+  }
+
+  const leader = state.home > state.guest ? 'home' : 'guest';
+  const leadBy = Math.abs(state.home - state.guest);
+  statusEl.textContent = `${getTeamName(leader)} leads by ${leadBy}.`;
 }
 
-function plusThree(){
-    if (event.target.parentElement.id == "btnHome"){
-        homeScore += 3;
-        homeScoreTxt.textContent = homeScore;
-    } else {
-        guestScore += 3;
-        guestScoreTxt.textContent = guestScore;
-    }
-    isLeading();
+function handleScoreClick(event) {
+  const button = event.currentTarget;
+  const teamCard = button.closest('.team-card');
+  if (!teamCard) {
+    return;
+  }
+
+  const team = teamCard.dataset.team;
+  const points = Number(button.dataset.points);
+  if (!team || Number.isNaN(points)) {
+    return;
+  }
+
+  state[team] += points;
+  hasScored = true;
+  updateScores();
+  updateStatus();
 }
 
-function plusFive(){
-    if (event.target.parentElement.id == "btnHome"){
-        homeScore += 5;
-        homeScoreTxt.textContent = homeScore;
-    } else {
-        guestScore += 5;
-        guestScoreTxt.textContent = guestScore;
-    }
-    isLeading();
+function buildFinalMessage() {
+  if (!hasScored) {
+    return 'Tip-off ready.';
+  }
+
+  const homeName = getTeamName('home');
+  const guestName = getTeamName('guest');
+
+  if (state.home === state.guest) {
+    return `Final: ${homeName} and ${guestName} tie at ${state.home}. New game ready.`;
+  }
+
+  const winner = state.home > state.guest ? 'home' : 'guest';
+  const winnerName = getTeamName(winner);
+  const winnerScore = state[winner];
+  const loserScore = state[winner === 'home' ? 'guest' : 'home'];
+  return `Final: ${winnerName} win ${winnerScore}-${loserScore}. New game ready.`;
 }
+
+function resetGame() {
+  const message = buildFinalMessage();
+  state.home = 0;
+  state.guest = 0;
+  hasScored = false;
+  updateScores();
+  statusEl.textContent = message;
+}
+
+document.querySelectorAll('.score-btn').forEach((button) => {
+  button.addEventListener('click', handleScoreClick);
+});
+
+resetBtn.addEventListener('click', resetGame);
+
+Object.values(names).forEach((input) => {
+  input.addEventListener('input', updateStatus);
+});
+
+updateScores();
+updateStatus();
