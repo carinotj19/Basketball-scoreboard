@@ -4,9 +4,9 @@ A browser-based scoreboard for tracking home vs. guest points in real time.
 
 ## 📂 Files Included
 
-- `index.html` – Main interface and layout of the scoreboard. :contentReference[oaicite:1]{index=1}  
-- `styles.css` – Styling for the score cards, buttons, and overall layout. :contentReference[oaicite:2]{index=2}  
-- `script.js` – Game logic for incrementing scores, determining the leader, and resetting the game. :contentReference[oaicite:3]{index=3}  
+- `index.html` – Main interface and layout of the scoreboard. 
+- `styles.css` – Styling for the score cards, buttons, and overall layout.
+- `script.js` – Game logic for incrementing scores, determining the leader, and resetting the game.
 - `.gitattributes` – Git configuration to handle line endings and other attributes.
 
 ## 🚀 Getting Started
